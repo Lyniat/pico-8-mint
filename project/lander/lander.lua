@@ -134,19 +134,25 @@ function ist_gelandet()
 
  ist_langsam = sp_uy < 1
 
- pixel_links = pget(spieler_links, spieler_unten - 1)
- pixel_rechts = pget(spieler_rechts, spieler_unten - 1)
- if (pixel_links == 10 and pixel_rechts == 10) then
-  if ist_langsam then
-   beende_spiel(true)
-  else
-   beende_spiel(false)
+  for i_y = 0, 7 do
+   ground = true
+   for i_x = 0, 7 do
+    pixel = pget(spieler_links + i_x, spieler_unten - i_y)
+    if pixel == 13 then
+     beende_spiel(false)
+    end
+    if i_y == 0 then
+     if pixel != 10 then
+      ground = false
+     end
+    else
+     ground = false
+    end
   end
- end
-
- if (pixel_links == 13 or pixel_links == 1 or pixel_rechts == 13 or pixel_rechts == 1) then
-  beende_spiel(false)
- end
+  if ground and ist_langsam then
+   beende_spiel(true)
+  end
+end
 
  if spieler_unten > 128 then
   beende_spiel(false)
